@@ -73,7 +73,7 @@ You can easily create new domains on the fly, and never have to worry about your
 ## Setting a new Project
 Add Træfik labels in container from docker-comose.yml:
 
-```yaml
+```
 labels:
 	- 'traefik.backend=${PROJECT_NAME}-web'
 	- 'traefik.port=80'
@@ -82,7 +82,7 @@ labels:
 
 And add at the end the network:
 
-```yaml
+```
 networks:
   default:
     external:
@@ -93,7 +93,7 @@ networks:
 #### PHP
 Add [mhsendmail](https://github.com/mailhog/mhsendmail) a sendmail replacement for MailHog:
 
-```yaml
+```
 volumes:
 	- docker-localhost/mhsendmail_linux_amd64.dms:/usr/local/bin/mhsendmail
 ```
