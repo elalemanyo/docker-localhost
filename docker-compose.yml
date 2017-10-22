@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik
+    restart: unless-stopped
+    command: -c /dev/null --web --docker --logLevel=DEBUG
+    ports:
+      - '80:80'
+      - '8080:8080'
+      - '8025:8025'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog
+    labels:
+      - 'traefik.backend=mailhog'
+      - 'traefik.port=8025'
+      - 'traefik.frontend.rule=Host:mailhog.dev'
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
+    command: --no-auth -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - 'traefik.backend=portainer'
+      - 'traefik.port=9000'
+      - 'traefik.frontend.rule=Host:portainer.dev'
