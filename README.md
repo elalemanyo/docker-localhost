@@ -75,9 +75,9 @@ Add Træfik labels in container from docker-comose.yml:
 
 ```
 labels:
-	- 'traefik.backend=${PROJECT_NAME}-web'
-	- 'traefik.port=80'
-	- 'traefik.frontend.rule=Host:${PROJECT_NAME}.dev'
+  - 'traefik.backend=${PROJECT_NAME}-web'
+  - 'traefik.port=80'
+  - 'traefik.frontend.rule=Host:${PROJECT_NAME}.dev'
 ```
 
 And add at the end the network:
