@@ -97,15 +97,15 @@ Add [mhsendmail](https://github.com/mailhog/mhsendmail) a sendmail replacement f
 volumes:
 	- docker-localhost/mhsendmail_linux_amd64.dms:/usr/local/bin/mhsendmail
 ```
- 
+
  Set php to use it. Add these lines to `php.ini`:
- 
+
  ```php
  sendmail_path = "/usr/local/bin/mhsendmail --smtp-addr="mailhog:1025""
  ```
 
 
-###Xdebug
+### Xdebug
 
 Making Xdebug working with Docker is quite tricky as there is currently a limitation to Docker for Mac that prevents a container to make a request to the the host, which is exactly what we would like to do with Xdebug.
 
@@ -133,7 +133,7 @@ xdebug.remote_host=10.200.10.1
 
 No extra configuration is needed in your IDE (tested on Sublime Text, Visual Studio Code and Atom), apart the usual.
 
-###Extra
+### Extra
 
 #### Add some aliases
 
