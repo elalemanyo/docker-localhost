@@ -4,6 +4,10 @@ This project provides a basic Docker setup, for building a local development env
 
 ##  Requirements
 - [Docker](https://www.docker.com)
+	- [Mac](http://docs.docker.com/mac/started/)
+	- [Windows](http://docs.docker.com/windows/started/)
+	- [Linux](https://docs.docker.com/linux/started/)
+
 - Docker Compose, Docker App and Docker Toolbox already include Compose along with other Docker apps, so most users do not need to install Compose separately.
 
 ## Features
@@ -95,7 +99,7 @@ Add [mhsendmail](https://github.com/mailhog/mhsendmail) a sendmail replacement f
 
 ```
 volumes:
-	- docker-localhost/mhsendmail_linux_amd64.dms:/usr/local/bin/mhsendmail
+	- [projects_dir]/docker-localhost/mhsendmail_linux_amd64.dms:/usr/local/bin/mhsendmail
 ```
 
  Set php to use it. Add these lines to `php.ini`:
@@ -138,9 +142,9 @@ No extra configuration is needed in your IDE (tested on Sublime Text, Visual Stu
 #### Add some aliases
 
 ```bash
-alias localhost='cd /docker-localhost'
-alias localhost_up='cd /docker-localhost && docker-compose up -d'
-alias localhost_start='cd /docker-localhost && docker-compose start'
-alias localhost_stop='cd /docker-localhost && docker-compose stop'
-alias localhost_restart='cd /docker-localhost && docker-compose restart'
+alias localhost='cd [projects_dir]/docker-localhost'
+alias localhost_up='cd [projects_dir]/docker-localhost && docker-compose up -d'
+alias localhost_start='cd [projects_dir]/docker-localhost && docker-compose start'
+alias localhost_stop='cd [projects_dir]/docker-localhost && docker-compose stop'
+alias localhost_restart='cd [projects_dir]/docker-localhost && docker-compose restart'
 ```
