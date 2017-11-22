@@ -12,6 +12,8 @@ services:
       - '8025:8025'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      frontend: {}
 
   mailhog:
     container_name: mailhog
@@ -20,6 +22,10 @@ services:
       - 'traefik.backend=mailhog'
       - 'traefik.port=8025'
       - 'traefik.frontend.rule=Host:mailhog.dev'
+      - 'traefik.docker.network=dockerlocalhost_frontend'
+    networks:
+      frontend: {}
+      backend: {}
 
   portainer:
     container_name: portainer
@@ -31,3 +37,11 @@ services:
       - 'traefik.backend=portainer'
       - 'traefik.port=9000'
       - 'traefik.frontend.rule=Host:portainer.dev'
+    networks:
+      frontend: {}
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
