@@ -40,6 +40,18 @@ services:
     networks:
       frontend: {}
 
+  # duckrails:
+  #   container_name: duckrails
+  #   image: iridakos/duckrails
+  #   labels:
+  #     - 'traefik.backend=duckrails'
+  #     - 'traefik.port=80'
+  #     - 'traefik.frontend.rule=Host:duckrails.dev'
+  #   volumes:
+  #     - ./duckrails:/opt/duckrails/db
+  #   networks:
+  #     frontend: {}
+
 networks:
   frontend:
     driver: bridge

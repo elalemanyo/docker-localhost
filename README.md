@@ -99,7 +99,7 @@ Add [mhsendmail](https://github.com/mailhog/mhsendmail) a sendmail replacement f
 
 ```
 volumes:
-	- [projects_dir]/docker-localhost/mhsendmail_linux_amd64.dms:/usr/local/bin/mhsendmail
+	- [projects_dir]/docker-localhost/mailhog/mhsendmail_linux_amd64.dms:/usr/local/bin/mhsendmail
 ```
 
  Set php to use it. Add these lines to `php.ini`:
