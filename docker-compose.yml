@@ -8,10 +8,11 @@ services:
     command: -c /dev/null --web --docker --logLevel=DEBUG
     ports:
       - '80:80'
-      - '8080:8080'
+      - '81:8080'
       - '8025:8025'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      # - ./traefik/traefik.toml:/etc/traefik/traefik.toml
     networks:
       frontend: {}
 
@@ -21,7 +22,7 @@ services:
     labels:
       - 'traefik.backend=mailhog'
       - 'traefik.port=8025'
-      - 'traefik.frontend.rule=Host:mailhog.dev'
+      - 'traefik.frontend.rule=Host:mail.test'
       - 'traefik.docker.network=dockerlocalhost_frontend'
     networks:
       frontend: {}
@@ -36,21 +37,9 @@ services:
     labels:
       - 'traefik.backend=portainer'
       - 'traefik.port=9000'
-      - 'traefik.frontend.rule=Host:portainer.dev'
+      - 'traefik.frontend.rule=Host:portainer.test'
     networks:
       frontend: {}
-
-  # duckrails:
-  #   container_name: duckrails
-  #   image: iridakos/duckrails
-  #   labels:
-  #     - 'traefik.backend=duckrails'
-  #     - 'traefik.port=80'
-  #     - 'traefik.frontend.rule=Host:duckrails.dev'
-  #   volumes:
-  #     - ./duckrails:/opt/duckrails/db
-  #   networks:
-  #     frontend: {}
 
 networks:
   frontend:
