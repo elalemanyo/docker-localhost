@@ -39,7 +39,7 @@ mkdir -p /usr/local/etc
 Create a simple configuration, where all .dev domains would respond with 127.0.0.1
 
 ```bash
-echo "address=/.dev/127.0.0.1" > /usr/local/etc/dnsmasq.conf
+echo "address=/.test/127.0.0.1" > /usr/local/etc/dnsmasq.conf
 ```
 
 Install the daemon startup file
@@ -54,24 +54,26 @@ Start the daemon
 sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 ```
 
-All we need to do is tell the resolver to use Dnsmasq for .dev domains:
+All we need to do is tell the resolver to use Dnsmasq for .test domains:
 
 ```bash
 # man 5 resolver
 sudo mkdir -p /etc/resolver
-sudo sh -c 'echo "nameserver 127.0.0.1" > /etc/resolver/dev'
+sudo sh -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'
 ```
 
-Now you can now use any .dev domain and it will always resolve to 127.0.0.1.<br/>
+Now you can now use any .test domain and it will always resolve to 127.0.0.1.<br/>
 You can easily create new domains on the fly, and never have to worry about your /etc/hosts file again.
 
 **Source:** [Setting up a wildcard DNS domain on Mac OS X](http://asciithoughts.com/posts/2014/02/23/setting-up-a-wildcard-dns-domain-on-mac-os-x/) - [ASCII Thoughts](http://asciithoughts.com)
 
+**Warning:** [Chrome & Firefox now force .dev domains to HTTPS via preloaded HSTS](https://ma.ttias.be/chrome-force-dev-domains-https-via-preloaded-hsts/)
+
 ## Accessing services
 
-- [Træfik](http://localhost.dev:8080/)
-- [Portainer](http://portainer.dev)
-- [MailHog](http://mailhog.dev/)
+- [Træfik](http://localhost.test:81/)
+- [Portainer](http://portainer.test)
+- [MailHog](http://mail.test/)
 
 
 ## Setting a new Project
