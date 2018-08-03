@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   traefik:
@@ -23,7 +23,7 @@ services:
       - 'traefik.backend=mailhog'
       - 'traefik.port=8025'
       - 'traefik.frontend.rule=Host:mail.test'
-      - 'traefik.docker.network=dockerlocalhost_frontend'
+      - 'traefik.docker.network=docker-localhost_frontend'
     networks:
       frontend: {}
       backend: {}
