@@ -1,0 +1,64 @@
+version: '3'
+services:
+  web:
+    container_name: ${PROJECT_NAME}-web
+    build:
+      context: .
+      args:
+        - APACHE_VERSION=${APACHE_VERSION}
+    volumes:
+      - ./html/:/var/www/html
+    links:
+      - 'mariadb'
+    restart: always
+    labels:
+      - 'traefik.backend=${PROJECT_NAME}-web'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:${PROJECT_NAME}.test'
+      - 'traefik.docker.network=docker-localhost_frontend'
+    networks:
+      frontend: {}
+      default: {}
+
+  mariadb:
+    container_name: ${PROJECT_NAME}-mariadb
+    image: mariadb:10.1
+    volumes:
+      - ./mariadb/:/var/lib/mysql
+    restart: always
+    environment:
+      TZ: ${TZ}
+      MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${PROJECT_NAME}
+
+  pma:
+    container_name: ${PROJECT_NAME}-pma
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    labels:
+      - 'traefik.backend=${PROJECT_NAME}-pma'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:phpmyadmin.${PROJECT_NAME}.test'
+      - 'traefik.docker.network=docker-localhost_frontend'
+    networks:
+      frontend: {}
+      default: {}
+
+volumes:
+    mariadb:
+      driver: local
+
+networks:
+  frontend:
+    external:
+      name: docker-localhost_frontend
+  default:
+    driver: bridge
