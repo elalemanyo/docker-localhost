@@ -8,11 +8,13 @@ services:
     command: -c /dev/null --web --docker --logLevel=DEBUG
     ports:
       - '80:80'
-      - '81:8080'
       - '8025:8025'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      # - ./traefik/traefik.toml:/etc/traefik/traefik.toml
+    labels:
+      - 'traefik.backend=traefik'
+      - 'traefik.port=8080'
+      - 'traefik.frontend.rule=Host:traefik.test'
     networks:
       frontend: {}
 
