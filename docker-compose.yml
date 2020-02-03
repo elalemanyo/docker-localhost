@@ -3,18 +3,18 @@ version: '3'
 services:
   traefik:
     container_name: traefik
-    image: traefik
+    image: traefik:v2.0
     restart: unless-stopped
-    command: -c /dev/null --web --docker --logLevel=DEBUG
+    command: --api.insecure=true --providers.docker
     ports:
       - '80:80'
       - '8025:8025'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
-      - 'traefik.backend=traefik'
-      - 'traefik.port=8080'
-      - 'traefik.frontend.rule=Host:traefik.test'
+      - "traefik.enable=true"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.test`)"
     networks:
       frontend: {}
 
@@ -22,10 +22,10 @@ services:
     container_name: mailhog
     image: mailhog/mailhog
     labels:
-      - 'traefik.backend=mailhog'
-      - 'traefik.port=8025'
-      - 'traefik.frontend.rule=Host:mail.test'
-      - 'traefik.docker.network=docker-localhost_frontend'
+      - "traefik.enable=true"
+      - "traefik.http.services.mailhog.loadbalancer.server.port=8025"
+      - "traefik.http.routers.mailhog.rule=Host(`mail.test`)"
+      - "traefik.docker.network=docker-localhost_frontend"
     networks:
       frontend: {}
       backend: {}
@@ -37,9 +37,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
-      - 'traefik.backend=portainer'
-      - 'traefik.port=9000'
-      - 'traefik.frontend.rule=Host:portainer.test'
+      - "traefik.enable=true"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.test`)"
     networks:
       frontend: {}
 
