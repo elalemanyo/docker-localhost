@@ -3,59 +3,40 @@ version: '3'
 services:
   traefik:
     container_name: traefik
-    image: traefik:v2.0
+    image: traefik:v2.3
     restart: unless-stopped
-    command:
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --providers.docker
-      - --api.insecure=true
-      - --certificatesresolvers.leresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-      - --certificatesresolvers.leresolver.acme.email=your@email.com
-      - --certificatesresolvers.leresolver.acme.storage=/acme.json
-      - --certificatesresolvers.leresolver.acme.tlschallenge=true
-
+    security_opt:
+      - no-new-privileges:true
     ports:
-      - "80:80"
-      - "443:443"
-      - "8025:8025"
+      - 80:80
+      - 443:443
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "./acme.json:/acme.json"
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/config.yml:/etc/traefik/config.yml:ro
+      - ./certs:/etc/certs:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.test`)"
+      - "traefik.http.routers.traefik=true"
     networks:
       frontend: {}
-
-  mailhog:
-    container_name: mailhog
-    image: mailhog/mailhog
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.mailhog.loadbalancer.server.port=8025"
-      - "traefik.http.routers.mailhog.rule=Host(`mail.test`)"
-      - "traefik.docker.network=docker-localhost_frontend"
-    networks:
-      frontend: {}
-      backend: {}
 
   portainer:
     container_name: portainer
+    security_opt:
+      - no-new-privileges:true
     image: portainer/portainer
     command: --no-auth -H unix:///var/run/docker.sock
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.d.test`)"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.test`)"
     networks:
       frontend: {}
 
 networks:
   frontend:
-    driver: bridge
-  backend:
     driver: bridge
