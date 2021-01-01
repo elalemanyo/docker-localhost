@@ -130,9 +130,9 @@ xdebug.remote_host=10.200.10.1
 
 No extra configuration is needed in your IDE (tested on Sublime Text, Visual Studio Code and Atom), apart the usual.
 
-### Extra
+## Extra
 
-#### Add some aliases
+### Add some aliases
 
 ```bash
 alias localhost='cd [projects_dir]/docker-localhost'
@@ -142,6 +142,6 @@ alias localhost_stop='cd [projects_dir]/docker-localhost && docker-compose stop'
 alias localhost_restart='cd [projects_dir]/docker-localhost && docker-compose restart'
 ```
 
-#### Inspiration
+## Inspiration
 
 [Traefik v2 HTTPS (SSL) on localhost](https://github.com/Heziode/traefik-v2-https-ssl-localhost)
