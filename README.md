@@ -85,7 +85,7 @@ You can easily create new domains on the fly, and never have to worry about your
 ## Setting a new Project
 Add Træfik labels in container from docker-comose.yml:
 
-```
+```yml
 labels:
   - "traefik.enable=true"
   - "traefik.http.routers.${PROJECT_NAME}.tls=true"
@@ -95,7 +95,7 @@ labels:
 
 And add at the end the network:
 
-```
+```yml
 networks:
   frontend:
     external:
@@ -112,11 +112,13 @@ To make Xdebug debugging work, you will first need to run this command on the ho
 
 This IP address is configured in the environment variables of the PHP container, in the `docker-compose.yml` file:
 
-    services:
-      php:
-        # ...
-        environment:
-          XDEBUG_REMOTE_HOST: 10.200.10.1
+```yml
+services:
+  php:
+    # ...
+      environment:
+        XDEBUG_REMOTE_HOST: 10.200.10.1
+```
 
 Or add it to the  `php.ini`:
 
