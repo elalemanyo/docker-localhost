@@ -116,8 +116,8 @@ This IP address is configured in the environment variables of the PHP container,
 services:
   php:
     # ...
-      environment:
-        XDEBUG_REMOTE_HOST: 10.200.10.1
+    environment:
+      XDEBUG_REMOTE_HOST: 10.200.10.1
 ```
 
 Or add it to the  `php.ini`:
